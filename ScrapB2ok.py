@@ -7,6 +7,8 @@ import time
 import bs4
 import requests
 
+import DataManager
+
 
 class AllLinks:
     """
@@ -168,7 +170,7 @@ class Book:
 
             for key in self.dict_stars:
                 if key in self.stars:
-                    review_rating = self.dict_stars[key]
+                    self.review_rating = self.dict_stars[key]
 
             for text in self.soup.findAll("ul", {"class": "breadcrumb"}):
                 for link in text.findAll('a'):
@@ -220,7 +222,7 @@ class Book:
                                             )
                                       )))
 
-            #downloadpic(image_url, universal_product_code, category)
+            DataManager.downloadpic(self.image_url, self.universal_product_code, self.category)
 
             return self.database
 
@@ -238,9 +240,10 @@ class Book:
 def scrap():
     books_lib = AllLinks()
     dict_books = {}
-    for k in range(len(books_lib.get_links())):
+    for k in range(3):
         dict_books[str(k)] = Book(books_lib.get_links()[k]).get_database()
     return dict_books
+
 
 
 def main():
@@ -249,11 +252,14 @@ def main():
     """
     books = scrap()
 
-    # Exemple:
-    book555 = books["555"]
-    print(book555)
+    print(books)
 
-    return books
+    # Exemple:
+    for k in range(len(books)):
+        print(books[str(k)][2])
+        DataManager.managecsv(books[str(k)])
+
+    pass
 
 
 if __name__ == '__main__':
