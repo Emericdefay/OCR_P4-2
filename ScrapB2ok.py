@@ -240,10 +240,11 @@ class Book:
 def scrap():
     books_lib = AllLinks()
     dict_books = {}
-    for k in range(3):
-        dict_books[str(k)] = Book(books_lib.get_links()[k]).get_database()
-    return dict_books
+    for k in range(len(books_lib.get_links())):
+        link = books_lib.get_links()[k]
+        dict_books[str(k)] = Book(link).get_database()
 
+    return dict_books
 
 
 def main():
@@ -252,11 +253,7 @@ def main():
     """
     books = scrap()
 
-    print(books)
-
-    # Exemple:
     for k in range(len(books)):
-        print(books[str(k)][2])
         DataManager.managecsv(books[str(k)])
 
     pass
