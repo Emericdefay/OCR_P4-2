@@ -239,7 +239,7 @@ def scrap():
     books_lib = AllLinks()
     dict_books = {}
     for k in range(len(books_lib.get_links())):
-        dict_books[str(k)] = Book(books_lib.get_links()[k])
+        dict_books[str(k)] = Book(books_lib.get_links()[k]).get_database()
     return dict_books
 
 
@@ -250,7 +250,7 @@ def main():
     books = scrap()
 
     # Exemple:
-    book555 = books.get_database()[555]
+    book555 = books["555"]
     print(book555)
 
     return books
